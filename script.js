@@ -1,14 +1,14 @@
-var titleArea = document.getElementById("titleArea");
-var guessingColorText = document.getElementById("guessingColorText");
-var statusText = document.getElementById("statusText");
-var buttonNewColors = document.getElementById("buttonNewColors");
-var buttonEasy = document.getElementById("buttonEasy");
-var buttonHard = document.getElementById("buttonHard");
+const titleArea = document.getElementById("titleArea");
+const guessingColorText = document.getElementById("guessingColorText");
+const statusText = document.getElementById("statusText");
+const buttonNewColors = document.getElementById("buttonNewColors");
+const buttonEasy = document.getElementById("buttonEasy");
+const buttonHard = document.getElementById("buttonHard");
 
 var guessingColor = 0;
 
-var colors = 3;
-var colorButtons = 
+var hardMode = false;
+const colorButtons = 
 [
     color1 = document.getElementById("color1"),
     color2 = document.getElementById("color2"),
@@ -17,6 +17,8 @@ var colorButtons =
     color5 = document.getElementById("color5"),
     color6 = document.getElementById("color6")
 ];
+
+var gameOver = false;
 
 ResetGame();
 
@@ -27,13 +29,13 @@ buttonNewColors.addEventListener("click", function() {
 
 buttonEasy.addEventListener("click", function() {
     statusText.textContent = "";
-    colors = 3;
+    hardMode = false;
     ResetGame();
 });
 
 buttonHard.addEventListener("click", function() {
     statusText.textContent = "";
-    colors = 6;
+    hardMode = true;
     ResetGame();
 });
 
@@ -43,28 +45,46 @@ for (let i = 0; i < colorButtons.length; i++) {
     {
         if (guessingColor == colorButtons.indexOf(this))
         {
+            gameOver = true;
+
             statusText.textContent = "You got it right";
             titleArea.style.backgroundColor = guessingColorText.textContent;
+            buttonNewColors.style.color = guessingColorText.textContent;
+            buttonEasy.style.color = guessingColorText.textContent;
+            buttonHard.style.color = guessingColorText.textContent;
+
+            let colors = hardMode? 5 : 2;
+
+            for (let j = 0; j <= colors; j++) {    
+                colorButtons[j].style.backgroundColor = guessingColorText.textContent;
+            }
         }
-        else
+        else if (!gameOver)
         {
             statusText.textContent = "Try again!";
-            this.style.display = "none";
+            this.style.backgroundColor = "black";
         }
     });
 }
 
 function ResetGame()
 {
-    for (let i = 0; i < colorButtons.length; i++) {
+    gameOver = false;
+    let colors = hardMode? 5 : 2;
+
+    for (let i = 0; i <= colors; i++) {
         const colorButton = colorButtons[i];
         colorButton.style.backgroundColor = Color();
     }
-
-    guessingColor = RandomIntRange(0, (colors-1));
+    if (!hardMode)
+    {
+        colorButtons[3].style.backgroundColor = "black";
+        colorButtons[4].style.backgroundColor = "black";
+        colorButtons[5].style.backgroundColor = "black";
+    }
+    
+    guessingColor = RandomIntRange(0, colors);
     guessingColorText.textContent = colorButtons[guessingColor].style.backgroundColor;
-
-    console.log(guessingColor);
 }
 
 function Color()

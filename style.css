@@ -1,17 +1,45 @@
+body {
+    background-color: black;
+}
+
 h1, h2 {
     text-transform: uppercase;
     text-align: center;
 }
 
-#color1, #color2, #color3, #color4, #color5, #color6 {
-    width: 200px;
-    height: 200px;
-    margin: auto;
-    overflow: hidden;
-    white-space: nowrap;
+#titleArea #buttonNewColors, #statusText, #buttonEasy, #buttonHard {
+    color: cornflowerblue;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.btn {
+    border-radius: 0px;
+}
+
+.btn:hover {
+    background-color: black;
+}
+
+.buttonsArea {
+    margin: 0 15% 0 15%;
 }
 
 .center {
     margin: auto;
-    width: 50%;
+}
+
+.color-panel {
+    width: 660px;
+}
+
+.colorButtons {
+    border-radius: 25px;
+    height: 200px;
+}
+
+.transitionFX {
+    transition: all 0.5s ease;
 }
